@@ -1,0 +1,21 @@
+name: Package Farmer Visual
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+jobs:
+  pack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Create resource pack ZIP
+        run: |
+          mkdir -p out/Farmer-Visual
+          cp pack.mcmeta README.md out/Farmer-Visual/
+          cp -r assets out/Farmer-Visual/
+          cd out
+          zip -r Farmer-Visual-1.16.5.zip Farmer-Visual
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Farmer-Visual-1.16.5
+          path: out/Farmer-Visual-1.16.5.zip
